@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_descubrir"
+        android:icon="@drawable/ic_favorite_border_black_24dp"
+        android:title="Descubrir"/>
+
+    <item
+        android:id="@+id/nav_inicio"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Inicio"/>
+
+    <item
+        android:id="@+id/nav_historial"
+        android:icon="@drawable/ic_history_black_24dp"
+        android:title="Historial"/>
+
+</menu>
