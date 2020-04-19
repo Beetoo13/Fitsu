@@ -19,7 +19,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Random;
 
@@ -27,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
     ImageView imgViewPlayera, imgViewShort, imgViewCollar, imgViewTenis;
+
+    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +74,32 @@ public class MainActivity extends AppCompatActivity {
 
     public void sugerenciaClick(View v){
 
+        requestQueue = Volley.newRequestQueue(this);
+
+        String URLAPI = "http://192.168.0.3:3000/clima";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URLAPI, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println("Respuesta: " + response);
+                try {
+                    System.out.println("Respuesta upperbody: " + response.getJSONArray("upperbody").get(0));
+                    System.out.println("Respuesta lowerbody: " + response.get("lowerbody"));
+                    System.out.println("Respuesta shoes: " + response.get("shoes"));
+                    System.out.println("Respuesta misc: " + response.getJSONArray("misc").get(0));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("Error: " + error);
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest);
+
         imgViewPlayera = findViewById(R.id.imgViewPlayera);
         imgViewShort = findViewById(R.id.imgViewShort);
         imgViewCollar = findViewById(R.id.imgViewCollar);
@@ -91,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
         imgViewShort.setImageResource(imgShort[numRandom2]);
         imgViewCollar.setImageResource(imgCollar[numRandom3]);
         imgViewTenis.setImageResource(imgTenis[numRandom4]);
+
+
 
     }
 
