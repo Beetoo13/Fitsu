@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
     FragmentDetallesHistorial imgDetalles = new FragmentDetallesHistorial();
 
+    //Estoy probando esta damier
+
     //Historial
     //private ListView lv_historial;
     //private Adaptador adaptador;
