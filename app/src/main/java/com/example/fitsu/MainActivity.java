@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
     //Estoy probando esta damier
 
+    //a ver si el push sale nomas con mi nombre
+
     //Historial
     //private ListView lv_historial;
     //private Adaptador adaptador;
