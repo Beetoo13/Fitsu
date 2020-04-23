@@ -43,9 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     FragmentDetallesHistorial imgDetalles = new FragmentDetallesHistorial();
 
-    //Estoy probando esta damier
-
-    //a ver si el push sale nomas con mi nombre
+    //a ver otra vez
 
     //Historial
     //private ListView lv_historial;
