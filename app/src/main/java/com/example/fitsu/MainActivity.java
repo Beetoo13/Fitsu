@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -16,7 +17,9 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -30,12 +33,19 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
     ImageView imgViewPlayera, imgViewShort, imgViewCollar, imgViewTenis;
+
+    FragmentDetallesHistorial imgDetalles = new FragmentDetallesHistorial();
+
+    //Historial
+    //private ListView lv_historial;
+    //private Adaptador adaptador;
 
     RequestQueue requestQueue;
 
@@ -44,12 +54,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Tons k mami
-
         bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         bottomNav.setSelectedItemId((R.id.nav_inicio));
+
+        //Historial
+        //lv_historial = findViewById(R.id.lv_historial);
+        //adaptador = new Adaptador(this, GetArrayItems());
+        //lv_historial.setAdapter(adaptador);
     }
+
+    //Historial
+
+    //private ArrayList<Entidad> GetArrayItems(){
+     //   ArrayList<Entidad> listItems = new ArrayList<>();
+      //  listItems.add(new Entidad(R.drawable.outfit1, "Lunes 17"));
+
+        /*
+        listItems.add(new Entidad(R.drawable.outfit2, "Martes 18"));
+        listItems.add(new Entidad(R.drawable.outfit3, "Miercoles 19"));
+        listItems.add(new Entidad(R.drawable.outfit4, "Jueves 20"));
+         */
+
+        //return listItems;
+    //}
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -131,14 +160,23 @@ public class MainActivity extends AppCompatActivity {
         imgViewCollar.setImageResource(imgCollar[numRandom3]);
         imgViewTenis.setImageResource(imgTenis[numRandom4]);
 
-
-
     }
 
     public void onClick (View v) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentDescubrir()).commit();
-        bottomNav.setSelectedItemId(R.id.nav_descubrir);
-        Toast.makeText(this, "Click en una foto", Toast.LENGTH_LONG).show();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentDetallesHistorial()).commit();
+        //bottomNav.setSelectedItemId(R.id.nav_historial);
+        //Toast.makeText(this, "Click en una foto", Toast.LENGTH_LONG).show();
+
+        if  (v.getId() == R.id.espacio1){
+            Toast.makeText(this, "Click en la foto 1", Toast.LENGTH_LONG).show();
+        } else if (v.getId() == R.id.espacio2){
+            Toast.makeText(this, "Click en la foto 2", Toast.LENGTH_LONG).show();
+        } else if (v.getId() == R.id.espacio3){
+            Toast.makeText(this, "Click en la foto 3", Toast.LENGTH_LONG).show();
+        } else if (v.getId() == R.id.espacio4){
+            Toast.makeText(this, "Click en la foto 4", Toast.LENGTH_LONG).show();
+        }
+
 
     }
 
