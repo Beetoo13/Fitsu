@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="bot_array">
+        <item>Selecciona un tipo...</item>
+        <item>pants</item>
+        <item>shorts</item>
+    </string-array>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="misc_array">
+        <item>Selecciona un tipo...</item>
+        <item>paraguas</item>
+        <item>guantes</item>
+        <item>sombrero</item>
+        <item>calcetines</item>
+        <item>lentesdesol</item>
+    </string-array>
+</resources>

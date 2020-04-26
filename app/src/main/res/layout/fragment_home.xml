@@ -40,7 +40,8 @@
                         android:layout_height="240dp"
                         android:layout_weight="1"
                         android:padding="10dp"
-                        app:srcCompat="@drawable/playera1" />
+                        app:srcCompat="@drawable/playera1"
+                        android:onClick="selectImageTop"/>
 
                     <ImageView
                         android:id="@+id/imgViewShort"
@@ -48,7 +49,8 @@
                         android:layout_height="240dp"
                         android:layout_weight="1"
                         android:padding="10dp"
-                        app:srcCompat="@drawable/short1" />
+                        app:srcCompat="@drawable/short1"
+                        android:onClick="selectImageBottom"/>
 
                     <ImageView
                         android:id="@+id/imgViewCollar"
@@ -56,7 +58,8 @@
                         android:layout_height="240dp"
                         android:layout_weight="1"
                         android:padding="10dp"
-                        app:srcCompat="@drawable/collar1" />
+                        app:srcCompat="@drawable/collar1"
+                        android:onClick="selectImageMisc"/>
 
                     <ImageView
                         android:id="@+id/imgViewTenis"
@@ -64,7 +67,8 @@
                         android:layout_height="240dp"
                         android:layout_weight="1"
                         android:padding="10dp"
-                        app:srcCompat="@drawable/tenis1" />
+                        app:srcCompat="@drawable/tenis1"
+                        android:onClick="selectImageShoes"/>
                 </LinearLayout>
             </HorizontalScrollView>
         </ScrollView>
@@ -82,7 +86,8 @@
             app:layout_constraintBottom_toTopOf="@+id/button2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="guardarConjunto"/>
 
         <Button
             android:id="@+id/button2"
