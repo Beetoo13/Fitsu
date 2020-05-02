@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
     ImageView imgViewPlayera, imgViewShort, imgViewCollar, imgViewTenis;
+    int fav = 0;
     RequestQueue requestQueue;
     String imgTopName, imgBottomName, imgMiscName, imgShoesName;
     String imgTopTipo, imgBottomTipo, imgMiscTipo, imgShoesTipo;
@@ -68,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //Tons k mami
 
         bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -500,14 +499,20 @@ public class MainActivity extends AppCompatActivity {
         imgViewCollar.setImageResource(imgCollar[numRandom3]);
         imgViewTenis.setImageResource(imgTenis[numRandom4]);
 
-
     }
 
     public void onClick(View v) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentDescubrir()).commit();
-        bottomNav.setSelectedItemId(R.id.nav_descubrir);
-        Toast.makeText(this, "Click en una foto", Toast.LENGTH_LONG).show();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentDetallesHistorial()).commit();
+    }
 
+    public void favorito(View v){
+        if(fav == 1){
+            v.setBackgroundResource(R.drawable.star);
+            fav=0;
+        } else {
+            v.setBackgroundResource(R.drawable.star_border);
+            fav=1;
+        }
     }
 
 }

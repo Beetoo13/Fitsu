@@ -15,57 +15,9 @@
         android:textColor="@color/design_default_color_on_secondary"
         android:textSize="24sp" />
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/historial"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:scrollbars="none">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:clickable="true"
-                android:onClick="onClick"
-                android:paddingBottom="10dp"
-                app:srcCompat="@drawable/outfit1" />
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:clickable="true"
-                android:onClick="onClick"
-                android:paddingBottom="10dp"
-                app:srcCompat="@drawable/outfit2" />
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:clickable="true"
-                android:onClick="onClick"
-                android:paddingBottom="10dp"
-                app:srcCompat="@drawable/outfit3" />
-
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:clickable="true"
-                android:onClick="onClick"
-                android:paddingBottom="10dp"
-                app:srcCompat="@drawable/outfit4" />
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

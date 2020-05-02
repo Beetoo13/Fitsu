@@ -1,50 +1,64 @@
 package com.example.fitsu;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 
-public class Adaptador extends BaseAdapter {
-    private Context context;
-    private ArrayList <Entidad> outfitList;
+public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> implements View.OnClickListener {
+    private ArrayList <Historial> outfitList;
+    private View.OnClickListener click;
 
-    public Adaptador(Context context, ArrayList<Entidad> outfitList) {
-        this.context = context;
+    public void setOnClickListener(View.OnClickListener listener){
+        this.click = listener;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (click!=null){
+            click.onClick(v);
+        }
+    }
+
+    public Adaptador(ArrayList<Historial> outfitList) {
         this.outfitList = outfitList;
     }
 
+    @NonNull
     @Override
-    public int getCount() {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.outfit_item, parent, false);
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        holder.outfitEnfoque.setImageResource(outfitList.get(position).getOutfitEnfoque());
+        holder.outfitPequeño.setImageResource(outfitList.get(position).getOutfitPequeño());
+        holder.fecha.setText(outfitList.get(position).getFecha());
+    }
+
+    @Override
+    public int getItemCount() {
         return outfitList.size();
     }
 
-    @Override
-    public Object getItem(int position) {
-        return outfitList.get(position);
-    }
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
+        ImageView outfitEnfoque, outfitPequeño;
+        TextView fecha;
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        Entidad Item = (Entidad) getItem(position);
-
-        convertView = LayoutInflater.from(context).inflate(R.layout.outfit_item, null);
-        ImageView outfit_item = convertView.findViewById(R.id.outfit);
-        TextView tv_fecha = convertView.findViewById(R.id.fecha);
-
-        outfit_item.setImageResource(Item.getImg_historial());
-        tv_fecha.setText(Item.getFecha());
-
-        return convertView;
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            outfitEnfoque = itemView.findViewById(R.id.outfit_card);
+            outfitPequeño = itemView.findViewById(R.id.miniOut_card);
+            fecha = itemView.findViewById(R.id.fecha_card);
+        }
     }
 }
