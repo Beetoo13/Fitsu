@@ -341,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
-        String urlAPI = "http://192.168.0.3:3000/conjunto";
+        String urlAPI = "http://192.168.0.6:3000/conjunto";
 
         JSONObject jsonBody = new JSONObject();
         JSONObject jsonImgTop = new JSONObject();
@@ -441,7 +441,7 @@ public class MainActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
-        String URLAPI = "http://192.168.0.3:3000/clima";
+        String URLAPI = "http://192.168.0.6:3000/clima";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URLAPI, null, new Response.Listener<JSONObject>() {
             @Override
