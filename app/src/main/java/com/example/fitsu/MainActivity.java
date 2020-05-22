@@ -515,4 +515,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void btn1(View v){
+        Toast.makeText(getApplicationContext(), "Presionaste boton 1", Toast.LENGTH_SHORT).show();
+    }
+
+    public void btn2(View v){
+        Toast.makeText(getApplicationContext(), "Presionaste boton 2", Toast.LENGTH_SHORT).show();
+    }
+
 }
