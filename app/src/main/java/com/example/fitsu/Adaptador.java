@@ -39,9 +39,21 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> impl
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.outfitEnfoque.setImageResource(outfitList.get(position).getOutfitEnfoque());
-        holder.outfitPequeño.setImageResource(outfitList.get(position).getOutfitPequeño());
+        //holder.outfitEnfoque.setImageResource(outfitList.get(position).getOutfitEnfoque());
+        //holder.outfitPequeño.setImageResource(outfitList.get(position).getOutfitPequeño());
         holder.fecha.setText(outfitList.get(position).getFecha());
+
+        if (outfitList.get(position).getOutfitG()!=null){
+            holder.outfitEnfoque.setImageBitmap(outfitList.get(position).getOutfitG());
+        } else {
+            holder.outfitEnfoque.setImageResource(R.drawable.outfit1);
+        }
+
+        if (outfitList.get(position).getOutfitP()!=null){
+            holder.outfitEnfoque.setImageBitmap(outfitList.get(position).getOutfitP());
+        } else {
+            holder.outfitEnfoque.setImageResource(R.drawable.outfit1);
+        }
     }
 
     @Override
