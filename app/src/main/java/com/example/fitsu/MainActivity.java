@@ -505,6 +505,10 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentDetallesHistorial()).commit();
     }
 
+    public void openFragmentComentarios(View v){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentComentarios()).commit();
+    }
+
     public void favorito(View v){
         if(fav == 1){
             v.setBackgroundResource(R.drawable.star);
