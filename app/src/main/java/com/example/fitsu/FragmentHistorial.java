@@ -55,7 +55,7 @@ public class FragmentHistorial extends Fragment implements Response.Listener<JSO
 
         cargarWebService();
 
-        llenarLista();
+        //llenarLista();
 
         Adaptador adp = new Adaptador(listaOutfits);
 
@@ -70,7 +70,7 @@ public class FragmentHistorial extends Fragment implements Response.Listener<JSO
         dialog.show();
 
         //En el minuto 8 del video puedes ver el url que pone aqui para que lo compares con el tuyo
-        String url = "";
+        String url = "http://192.168.1.66:3000/historial";
 
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         request.add(jsonObjectRequest);
@@ -87,17 +87,43 @@ public class FragmentHistorial extends Fragment implements Response.Listener<JSO
     public void onResponse(JSONObject response) {
         Historial historial = null;
 
-        JSONArray json = response.optJSONArray("historial"); // aqui va el nombre de la tabla
+        JSONObject jsonConjuntos = null; // aqui va el nombre de la tabla
+        int jsonNumeroDocs = 0;
+
+        try {
+            jsonConjuntos = response.getJSONObject("conjuntos");
+            jsonNumeroDocs = response.getInt("numeroDocs");
+            System.out.println("Respuesta historial: " + jsonConjuntos);
+            System.out.println("Respuesta num documentos: " + jsonNumeroDocs);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         try{
-            for (int i=0; i < json.length(); i++){
+            for (int i=0; i < jsonNumeroDocs; i++){
                 historial = new Historial();
-                JSONObject jsonObject = null;
-                jsonObject = json.getJSONObject(i);
+                String jsonObjectFecha = null;
+                JSONObject jsonObjectDatoG = null;
+                JSONObject jsonObjectDatoP = null;
+                String jsonObjectDatoGObtener = null;
+                String jsonObjectDatoPObtener = null;
 
-                historial.setFecha(jsonObject.optString("fecha")); // o el nombre de donde va la fecha
-                historial.setDatoG(jsonObject.optString("imagenG")); //donde esta la imagen
-                historial.setDatoP(jsonObject.optString("imagenP")); //La misma imagen pero para la miniatura
+                jsonObjectFecha = jsonConjuntos.getString("savedAt");
+                jsonObjectDatoG = jsonConjuntos.getJSONObject("imgTop");
+                jsonObjectDatoP = jsonConjuntos.getJSONObject("imgTop");
+
+                jsonObjectDatoPObtener = jsonObjectDatoP.getString("img64top");
+                jsonObjectDatoGObtener = jsonObjectDatoG.getString("img64top");
+
+
+                //System.out.println("Respuesta del saved at #" + i+1 + ": " + jsonObject);
+                System.out.println("savedAt #:" + (i+1) + ": " + jsonObjectFecha);
+                System.out.println("datoG #:" + (i+1) + ": " + jsonObjectDatoGObtener);
+                System.out.println("datoP #:" + (i+1) + ": " + jsonObjectDatoPObtener);
+
+                historial.setFecha(jsonObjectFecha); // o el nombre de donde va la fecha
+                historial.setDatoP(jsonObjectDatoPObtener); //La misma imagen pero para la miniatura
+                historial.setDatoG(jsonObjectDatoGObtener); //donde esta la imagen
                 listaOutfits.add(historial);
             }
             dialog.hide();

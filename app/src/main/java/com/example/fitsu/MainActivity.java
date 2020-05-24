@@ -63,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
     String imgTopName, imgBottomName, imgMiscName, imgShoesName;
     String imgTopTipo, imgBottomTipo, imgMiscTipo, imgShoesTipo;
     String imgTopBase64, imgBottomBase64, imgMiscBase64, imgShoesBase64;
+    String imgBase64TopObtenido;
+    String imgBase64BottomObtenido;
+    String imgBase64ShoesObtenido;
+    String imgBase64MiscObtenido;
     public static final int MY_DEFAULT_TIMEOUT = 15000;
 
     @Override
@@ -441,20 +445,44 @@ public class MainActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
-        String URLAPI = "http://192.168.0.6:3000/clima";
+        imgViewPlayera = findViewById(R.id.imgViewPlayera);
+        imgViewShort = findViewById(R.id.imgViewShort);
+        imgViewCollar = findViewById(R.id.imgViewCollar);
+        imgViewTenis = findViewById(R.id.imgViewTenis);
+
+        String URLAPI = "http://192.168.1.66:3000/clima";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URLAPI, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+
                 System.out.println("Respuesta: " + response);
+
                 try {
-                    System.out.println("Respuesta upperbody: " + response.getJSONArray("upperbody").get(0));
-                    System.out.println("Respuesta lowerbody: " + response.get("lowerbody"));
-                    System.out.println("Respuesta shoes: " + response.get("shoes"));
-                    System.out.println("Respuesta misc: " + response.getJSONArray("misc").get(0));
+                    imgBase64TopObtenido = (String) response.get("topObtenido");
+                    imgBase64BottomObtenido = (String) response.get("bottomObtenido");
+                    imgBase64ShoesObtenido = (String) response.get("shoesObtenido");
+                    imgBase64MiscObtenido = (String) response.get("miscObtenido");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                byte[] decodedStringTop = Base64.decode(imgBase64TopObtenido, Base64.DEFAULT);
+                Bitmap decodedByteTop = BitmapFactory.decodeByteArray(decodedStringTop, 0, decodedStringTop.length);
+                imgViewPlayera.setImageBitmap(decodedByteTop);
+
+                byte[] decodedStringBottom = Base64.decode(imgBase64BottomObtenido, Base64.DEFAULT);
+                Bitmap decodedByteBottom = BitmapFactory.decodeByteArray(decodedStringBottom, 0, decodedStringBottom.length);
+                imgViewShort.setImageBitmap(decodedByteBottom);
+
+                byte[] decodedStringShoes = Base64.decode(imgBase64ShoesObtenido, Base64.DEFAULT);
+                Bitmap decodedByteShoes = BitmapFactory.decodeByteArray(decodedStringShoes, 0, decodedStringShoes.length);
+                imgViewTenis.setImageBitmap(decodedByteShoes);
+
+                byte[] decodedStringMisc = Base64.decode(imgBase64MiscObtenido, Base64.DEFAULT);
+                Bitmap decodedByteMisc = BitmapFactory.decodeByteArray(decodedStringMisc, 0, decodedStringMisc.length);
+                imgViewCollar.setImageBitmap(decodedByteMisc);
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -469,35 +497,6 @@ public class MainActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         requestQueue.add(jsonObjectRequest);
-
-        imgViewPlayera = findViewById(R.id.imgViewPlayera);
-        imgViewShort = findViewById(R.id.imgViewShort);
-        imgViewCollar = findViewById(R.id.imgViewCollar);
-        imgViewTenis = findViewById(R.id.imgViewTenis);
-
-        int[] imgPlayera = {R.drawable.playera1, R.drawable.playera2, R.drawable.playera3};
-        int[] imgShort = {R.drawable.short1, R.drawable.short2, R.drawable.short3};
-        int[] imgCollar = {R.drawable.collar1, R.drawable.collar2, R.drawable.collar3};
-        int[] imgTenis = {R.drawable.tenis1, R.drawable.tenis2, R.drawable.tenis3};
-
-        Random random1 = new Random();
-        Random random2 = new Random();
-        Random random3 = new Random();
-        Random random4 = new Random();
-
-        int numRandom1 = random1.nextInt(3);
-        Log.w("random1: ", "Valor:" + numRandom1);
-        int numRandom2 = random2.nextInt(3);
-        Log.w("random2: ", "Valor:" + numRandom2);
-        int numRandom3 = random3.nextInt(3);
-        Log.w("random3: ", "Valor:" + numRandom3);
-        int numRandom4 = random4.nextInt(3);
-        Log.w("random4: ", "Valor:" + numRandom4);
-
-        imgViewPlayera.setImageResource(imgPlayera[numRandom1]);
-        imgViewShort.setImageResource(imgShort[numRandom2]);
-        imgViewCollar.setImageResource(imgCollar[numRandom3]);
-        imgViewTenis.setImageResource(imgTenis[numRandom4]);
 
     }
 

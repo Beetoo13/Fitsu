@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre"
+        android:layout_gravity="center"
+        android:textSize="30sp"
+        android:id="@+id/txtViewDialogNombre"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/editTextConjunto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15sp"
+        android:ems="10"
+        android:hint="Introduce el nombre de este conjunto"
+        android:inputType="textPersonName"
+        android:textAlignment="center"/>
+
+    <ImageView
+        android:id="@+id/imgViewConjunto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15sp"
+        android:onClick="selectImageConjunto"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15sp"
+        android:layout_marginBottom="15sp"
+        android:layout_gravity="center"
+        android:text="Ok"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:id="@+id/btnNombreConjunto"/>
+
+</LinearLayout>
