@@ -27,6 +27,7 @@ public class Historial {
 
     //get & set de imagen bdd------------------------------
 
+    //grande
     public String getDatoG() {
         return datoG;
     }
@@ -55,6 +56,7 @@ public class Historial {
         this.outfitG = outfitG;
     }
 
+    //pequeño
     public String getDatoP() {
         return datoP;
     }

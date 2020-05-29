@@ -50,9 +50,9 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> impl
         }
 
         if (outfitList.get(position).getOutfitP()!=null){
-            holder.outfitEnfoque.setImageBitmap(outfitList.get(position).getOutfitP());
+            holder.outfitPequeño.setImageBitmap(outfitList.get(position).getOutfitP());
         } else {
-            holder.outfitEnfoque.setImageResource(R.drawable.outfit1);
+            holder.outfitPequeño.setImageResource(R.drawable.outfit1);
         }
     }
 
