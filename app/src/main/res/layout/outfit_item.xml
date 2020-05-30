@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
                 android:contentDescription="outfit"
-                android:onClick="onClick"
+                android:onClick="onClickToFrag"
                 android:scaleType="centerCrop"
                 android:src="@drawable/outfit1"
                 app:layout_constraintEnd_toEndOf="parent"

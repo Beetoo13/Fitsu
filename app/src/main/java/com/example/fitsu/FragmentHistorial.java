@@ -1,6 +1,7 @@
 package com.example.fitsu;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -41,6 +42,8 @@ public class FragmentHistorial extends Fragment implements Response.Listener<JSO
     RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
 
+    public static Context context;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,6 +53,8 @@ public class FragmentHistorial extends Fragment implements Response.Listener<JSO
         recyclerHistorial = view.findViewById(R.id.historial);
         recyclerHistorial.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        context = getActivity().getApplicationContext();
+
         //Instanciaciones de lo que agregamos recientemente
         request = Volley.newRequestQueue(getContext());
 
@@ -57,19 +62,18 @@ public class FragmentHistorial extends Fragment implements Response.Listener<JSO
 
         //llenarLista();
 
-        Adaptador adp = new Adaptador(listaOutfits);
+        Adaptador adp = new Adaptador(context, listaOutfits);
 
         recyclerHistorial.setAdapter(adp);
 
         return view;
     }
 
-    private void cargarWebService(){
+    private void cargarWebService() {
         dialog = new ProgressDialog(getContext());
-        dialog.setMessage("Consultando imagenes");
+        dialog.setMessage("Consultando historial");
         dialog.show();
 
-        //En el minuto 8 del video puedes ver el url que pone aqui para que lo compares con el tuyo
         String url = "http://192.168.1.66:3000/historial";
 
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
@@ -87,11 +91,11 @@ public class FragmentHistorial extends Fragment implements Response.Listener<JSO
     public void onResponse(JSONObject response) {
         Historial historial = null;
 
-        JSONObject jsonConjuntos = null; // aqui va el nombre de la tabla
+        JSONArray jsonConjuntos = null; // aqui va el nombre de la tabla
         int jsonNumeroDocs = 0;
 
         try {
-            jsonConjuntos = response.getJSONObject("conjuntos");
+            jsonConjuntos = response.getJSONArray("conjuntos");
             jsonNumeroDocs = response.getInt("numeroDocs");
             System.out.println("Respuesta historial: " + jsonConjuntos);
             System.out.println("Respuesta num documentos: " + jsonNumeroDocs);
@@ -99,48 +103,34 @@ public class FragmentHistorial extends Fragment implements Response.Listener<JSO
             e.printStackTrace();
         }
 
-        try{
-            for (int i=0; i < jsonNumeroDocs; i++){
-                historial = new Historial();
-                String jsonObjectFecha = null;
-                JSONObject jsonObjectDatoG = null;
-                JSONObject jsonObjectDatoP = null;
-                String jsonObjectDatoGObtener = null;
-                String jsonObjectDatoPObtener = null;
+        for (int i = 0; i < jsonNumeroDocs; i++) {
+            historial = new Historial();
+            JSONObject jsonObjectFecha = null;
+            JSONObject jsonObjectDatoImagen = null;
 
-                jsonObjectFecha = jsonConjuntos.getString("savedAt");
-                jsonObjectDatoG = jsonConjuntos.getJSONObject("imgTop");
-                jsonObjectDatoP = jsonConjuntos.getJSONObject("imgTop");
-
-                jsonObjectDatoPObtener = jsonObjectDatoP.getString("img64top");
-                jsonObjectDatoGObtener = jsonObjectDatoG.getString("img64top");
-
-
-                //System.out.println("Respuesta del saved at #" + i+1 + ": " + jsonObject);
-                System.out.println("savedAt #:" + (i+1) + ": " + jsonObjectFecha);
-                System.out.println("datoG #:" + (i+1) + ": " + jsonObjectDatoGObtener);
-                System.out.println("datoP #:" + (i+1) + ": " + jsonObjectDatoPObtener);
-
-                historial.setFecha(jsonObjectFecha); // o el nombre de donde va la fecha
-                historial.setDatoP(jsonObjectDatoPObtener); //La misma imagen pero para la miniatura
-                historial.setDatoG(jsonObjectDatoGObtener); //donde esta la imagen
-                listaOutfits.add(historial);
+            try {
+                jsonObjectFecha = jsonConjuntos.getJSONObject(i);
+                //System.out.println("jsonObject #" + (i+1) + ": " + jsonObjectFecha);
+                jsonObjectDatoImagen = jsonObjectFecha.getJSONObject("imgConjunto");
+                //System.out.println("jsonObjImg: " + jsonObjectDatoImagen);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-            dialog.hide();
-            Adaptador adp = new Adaptador(listaOutfits);
-            recyclerHistorial.setAdapter(adp);
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" + response, Toast.LENGTH_SHORT).show();
-            dialog.hide();
+            historial.setFecha(jsonObjectFecha.optString("savedAt")); // o el nombre de donde va la fecha
+            historial.setDatoP(jsonObjectDatoImagen.optString("img64conjunto")); //La misma imagen pero para la miniatura
+            historial.setDatoG(jsonObjectDatoImagen.optString("img64conjunto")); //donde esta la imagen
+            listaOutfits.add(historial);
         }
+        dialog.hide();
+        Adaptador adp = new Adaptador(context, listaOutfits);
+        recyclerHistorial.setAdapter(adp);
 
     }
 
     //Con esto llenaba el recycler y ahora se llena con esto de arriba ^^^
 
-    public void llenarLista(){
+    public void llenarLista() {
         listaOutfits.add(new Historial(R.drawable.outfit1, R.drawable.outfit1, "Lunes 17"));
         listaOutfits.add(new Historial(R.drawable.outfit2, R.drawable.outfit2, "Martes 18"));
         listaOutfits.add(new Historial(R.drawable.outfit3, R.drawable.outfit3, "Miércoles 19"));

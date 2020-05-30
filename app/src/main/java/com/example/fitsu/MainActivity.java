@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     String imgBase64BottomObtenido;
     String imgBase64ShoesObtenido;
     String imgBase64MiscObtenido;
+    Historial historial = new Historial();
     public static final int MY_DEFAULT_TIMEOUT = 15000;
 
     @Override
@@ -500,7 +501,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onClick(View v) {
+    public void onClickToFrag(View v) {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentDetallesHistorial()).commit();
     }
 

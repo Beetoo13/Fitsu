@@ -36,10 +36,6 @@ public class Historial {
         this.datoG = datoG;
 
         try {
-
-            //byte[] decodedStringTop = Base64.decode(datoG, Base64.DEFAULT);
-            //this.outfitG = BitmapFactory.decodeByteArray(decodedStringTop, 0, decodedStringTop.length);
-
             byte[] byteCode= Base64.decode(datoG, Base64.DEFAULT);//Decodifica el string "dato"
             this.outfitG = BitmapFactory.decodeByteArray(byteCode,0,byteCode.length);
         } catch (Exception e) {
@@ -65,10 +61,6 @@ public class Historial {
         this.datoP = datoP;
 
         try {
-
-            //byte[] decodedStringTop = Base64.decode(datoP, Base64.DEFAULT);
-            //this.outfitP = BitmapFactory.decodeByteArray(decodedStringTop, 0, decodedStringTop.length);
-
             byte[] byteCode= Base64.decode(datoP, Base64.DEFAULT);//Decodifica el string "dato"
             this.outfitP = BitmapFactory.decodeByteArray(byteCode,0,byteCode.length);
         } catch (Exception e) {
