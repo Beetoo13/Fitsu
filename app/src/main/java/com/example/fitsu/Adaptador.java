@@ -100,6 +100,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> impl
             outfitPequeño = itemView.findViewById(R.id.miniOut_card);
             fecha = itemView.findViewById(R.id.fecha_card);
 
+            /*
             this.outfitEnfoque.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -111,6 +112,8 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> impl
                     //((MainActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentDetallesHistorial()).commit();
                 }
             });
+
+             */
 
         }
     }

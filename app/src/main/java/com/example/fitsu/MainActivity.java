@@ -501,9 +501,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*
     public void onClickToFrag(View v) {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentDetallesHistorial()).commit();
     }
+
+     */
 
     public void openFragmentComentarios(View v){
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentComentarios()).commit();
