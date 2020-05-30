@@ -108,7 +108,6 @@ public class FragmentHistorial extends Fragment implements Response.Listener<JSO
 
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         request.add(jsonObjectRequest);
-
     }
 
     //Metodos implementados

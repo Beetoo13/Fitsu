@@ -1,5 +1,6 @@
 package com.example.fitsu;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,13 +8,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class AdaptadorDescubrir extends RecyclerView.Adapter<AdaptadorDescubrir.MyViewHolder> implements View.OnClickListener {
     private ArrayList <Publicacion> publicacionesList;
+    private Context context;
     private View.OnClickListener click;
+
+    public void setOnClickListener(View.OnClickListener listener) {
+        this.click = listener;
+    }
 
     @Override
     public void onClick(View v) {
@@ -22,7 +29,8 @@ public class AdaptadorDescubrir extends RecyclerView.Adapter<AdaptadorDescubrir.
         }
     }
 
-    public AdaptadorDescubrir(ArrayList<Publicacion> publicacionesList) {
+    public AdaptadorDescubrir(Context context, ArrayList<Publicacion> publicacionesList) {
+        this.context = context;
         this.publicacionesList = publicacionesList;
     }
 
@@ -35,9 +43,15 @@ public class AdaptadorDescubrir extends RecyclerView.Adapter<AdaptadorDescubrir.
 
     @Override
     public void onBindViewHolder(@NonNull AdaptadorDescubrir.MyViewHolder holder, int position) {
-        holder.outfitPublicacion.setImageResource(publicacionesList.get(position).getOutfitPost());
+        //holder.outfitPublicacion.setImageResource(publicacionesList.get(position).getOutfitPost());
         holder.nameP.setText(publicacionesList.get(position).getNameP());
         holder.contentP.setText(publicacionesList.get(position).getContentP());
+
+        if (publicacionesList.get(position).getOutfitBit() != null) {
+            holder.outfitPublicacion.setImageBitmap(publicacionesList.get(position).getOutfitBit());
+        } else {
+            holder.outfitPublicacion.setImageResource(R.drawable.outfit1);
+        }
     }
 
     @Override
