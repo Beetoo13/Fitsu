@@ -1,6 +1,7 @@
 package com.example.fitsu;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.Serializable;
@@ -23,15 +20,8 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> impl
     private ArrayList<Historial> outfitList;
     private Context context;
     private View.OnClickListener click;
-    Fragment fragmentDetallesHisto = new Fragment();
-
-    Bundle bundle = new Bundle();
 
     String fechaEnviar = "";
-
-    public void setOnClickListener(View.OnClickListener listener) {
-        this.click = listener;
-    }
 
     @Override
     public void onClick(View v) {
@@ -39,6 +29,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> impl
             click.onClick(v);
         }
     }
+
 
     public Adaptador(Context context, ArrayList<Historial> outfitList) {
         this.context = context;
@@ -66,9 +57,7 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> impl
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        //holder.outfitEnfoque.setImageResource(outfitList.get(position).getOutfitEnfoque());
-        //holder.outfitPequeño.setImageResource(outfitList.get(position).getOutfitPequeño());
+    public void onBindViewHolder(@NonNull MyViewHolder holder,final int position) {
         holder.fecha.setText(outfitList.get(position).getFecha());
 
         if (outfitList.get(position).getOutfitG() != null) {
@@ -91,30 +80,31 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MyViewHolder> impl
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
+        //Contexto
+        Context context;
+
         ImageView outfitEnfoque, outfitPequeño;
         TextView fecha;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            context = itemView.getContext();
+
             outfitEnfoque = itemView.findViewById(R.id.outfit_card);
             outfitPequeño = itemView.findViewById(R.id.miniOut_card);
             fecha = itemView.findViewById(R.id.fecha_card);
 
-            /*
             this.outfitEnfoque.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // send the text to the listener, i.e Activity.
                     fechaEnviar = fecha.getText().toString();
-                    System.out.println("fechaEnviar: " + fechaEnviar);
-                    bundle.putString("fecha", fechaEnviar);
-                    fragmentDetallesHisto.setArguments(bundle);
-                    //((MainActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentDetallesHistorial()).commit();
+                    //Faltarian las imagenes todavia
+                    //System.out.println("fechaEnviar: " + fechaEnviar);
+                    Intent intent = new Intent(context, ActivityDetallesHistorial.class);
+                    intent.putExtra("fecha", fechaEnviar);
+                    context.startActivity(intent);
                 }
             });
-
-             */
-
         }
     }
 }

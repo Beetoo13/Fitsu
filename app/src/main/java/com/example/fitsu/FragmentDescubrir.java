@@ -77,8 +77,8 @@ public class FragmentDescubrir extends Fragment implements Response.ErrorListene
         dialog.setMessage("Consultando historial");
         dialog.show();
 
-        String url = "http://192.168.1.66:3000/historial";
-        //String url = "http://192.168.8.105:3000/historial";
+        //String url = "http://192.168.1.66:3000/historial";
+        String url = "http://192.168.8.105:3000/historial";
 
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         request.add(jsonObjectRequest);

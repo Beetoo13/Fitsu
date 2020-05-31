@@ -43,23 +43,12 @@ public class FragmentHistorial extends Fragment implements Response.Listener<JSO
     RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
 
-    //Se crea una imageview para agregar el evento click y pasar la info en bundle
-    ImageView img;
-    //Se agrega la fecha para poderla enviar
-    TextView fecha;
-    String fechaEnviar;
-
-
     public static Context context;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_historial, container, false);
-
-        //Inicializa imgview y tview
-        img = view.findViewById(R.id.outfit_card);
-        fecha = view.findViewById(R.id.fecha_card);
 
         listaOutfits = new ArrayList<>();
         recyclerHistorial = view.findViewById(R.id.historial);
@@ -77,23 +66,6 @@ public class FragmentHistorial extends Fragment implements Response.Listener<JSO
         Adaptador adp = new Adaptador(context, listaOutfits);
 
         recyclerHistorial.setAdapter(adp);
-
-        /*
-
-        //Se agrega el evento click para pasar bundle
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // send the text to the listener, i.e Activity.
-                fechaEnviar = fecha.getText().toString();
-                //System.out.println("fechaEnviar: " + fechaEnviar);
-                Intent intent = new Intent(FragmentHistorial.context, FragmentDetallesHistorial.class);
-                intent.putExtra("fecha", fechaEnviar);
-                startActivity(intent);
-            }
-        });
-
-         */
 
         return view;
     }
