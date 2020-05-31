@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     String imgBase64MiscObtenido;
     Historial historial = new Historial();
     public static final int MY_DEFAULT_TIMEOUT = 15000;
+    Context contextMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         bottomNav.setSelectedItemId((R.id.nav_inicio));
+        contextMain = getApplicationContext();
     }
 
     @Override

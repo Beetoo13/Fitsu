@@ -29,6 +29,7 @@
                 android:id="@+id/outfit_card"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
+                android:clickable="true"
                 android:contentDescription="outfit"
                 android:scaleType="centerCrop"
                 android:src="@drawable/outfit1"
