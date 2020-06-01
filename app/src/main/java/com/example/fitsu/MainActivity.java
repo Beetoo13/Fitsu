@@ -63,13 +63,21 @@ public class MainActivity extends AppCompatActivity {
     String imgTopName, imgBottomName, imgMiscName, imgShoesName;
     String imgTopTipo, imgBottomTipo, imgMiscTipo, imgShoesTipo;
     String imgTopBase64, imgBottomBase64, imgMiscBase64, imgShoesBase64;
-    String imgBase64TopObtenido;
-    String imgBase64BottomObtenido;
-    String imgBase64ShoesObtenido;
-    String imgBase64MiscObtenido;
+    String imgBase64TopObtenido, imgBase64BottomObtenido, imgBase64ShoesObtenido, imgBase64MiscObtenido;
+    String sugerenciaTopObtenido, sugerenciaBottomObtenido, sugerenciaMiscObtenido, sugerenciaShoesObtenido;
     Historial historial = new Historial();
     public static final int MY_DEFAULT_TIMEOUT = 15000;
     Context contextMain;
+
+    JSONObject jsonBody = new JSONObject();
+    JSONObject jsonImgTop = new JSONObject();
+    JSONObject jsonImgTopTipo = new JSONObject();
+    JSONObject jsonImgBottom = new JSONObject();
+    JSONObject jsonImgBottomTipo = new JSONObject();
+    JSONObject jsonImgMisc = new JSONObject();
+    JSONObject jsonImgMiscTipo = new JSONObject();
+    JSONObject jsonImgShoes = new JSONObject();
+    JSONObject jsonImgShoesTipo = new JSONObject();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 //imagen a base64
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                byte[] byteArray = byteArrayOutputStream .toByteArray();
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
 
                 //Encoding de la imagen a un string de base64
                 imgTopBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
@@ -154,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                 //imagen a base64
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                byte[] byteArray = byteArrayOutputStream .toByteArray();
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
 
                 //Encoding de la imagen a un string de base64
                 imgBottomBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
@@ -205,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
                 //imagen a base64
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                byte[] byteArray = byteArrayOutputStream .toByteArray();
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
 
                 //Encoding de la imagen a un string de base64
                 imgMiscBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
@@ -256,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
                 //imagen a base64
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                byte[] byteArray = byteArrayOutputStream .toByteArray();
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
 
                 //Encoding de la imagen a un string de base64
                 imgShoesBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
@@ -349,16 +357,6 @@ public class MainActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         String urlAPI = "http://192.168.1.66:3000/conjunto";
-
-        JSONObject jsonBody = new JSONObject();
-        JSONObject jsonImgTop = new JSONObject();
-        JSONObject jsonImgTopTipo = new JSONObject();
-        JSONObject jsonImgBottom = new JSONObject();
-        JSONObject jsonImgBottomTipo = new JSONObject();
-        JSONObject jsonImgMisc = new JSONObject();
-        JSONObject jsonImgMiscTipo = new JSONObject();
-        JSONObject jsonImgShoes = new JSONObject();
-        JSONObject jsonImgShoesTipo = new JSONObject();
 
         try {
 
@@ -453,38 +451,31 @@ public class MainActivity extends AppCompatActivity {
         imgViewCollar = findViewById(R.id.imgViewCollar);
         imgViewTenis = findViewById(R.id.imgViewTenis);
 
-        String URLAPI = "http://192.168.1.66:3000/clima";
+        String URLAPI = "http://192.168.1.66:3000/climaUpper";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URLAPI, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
-                System.out.println("Respuesta: " + response);
+                //System.out.println("Respuesta Upper: " + response.toString());
 
                 try {
-                    imgBase64TopObtenido = (String) response.get("topObtenido");
-                    imgBase64BottomObtenido = (String) response.get("bottomObtenido");
-                    imgBase64ShoesObtenido = (String) response.get("shoesObtenido");
-                    imgBase64MiscObtenido = (String) response.get("miscObtenido");
+                    imgBase64TopObtenido = (String) response.get("imgTop");
+                    imgTopBase64 = imgBase64TopObtenido;
+
+                    sugerenciaTopObtenido = (String) response.get("tipoTop");
+                    imgTopTipo = sugerenciaTopObtenido;
+
+                    imgTopName = "defaultTopName";
+
+                    byte[] decodedStringTop = Base64.decode(imgBase64TopObtenido, Base64.DEFAULT);
+                    Bitmap decodedByteTop = BitmapFactory.decodeByteArray(decodedStringTop, 0, decodedStringTop.length);
+                    imgViewPlayera.setImageBitmap(decodedByteTop);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                byte[] decodedStringTop = Base64.decode(imgBase64TopObtenido, Base64.DEFAULT);
-                Bitmap decodedByteTop = BitmapFactory.decodeByteArray(decodedStringTop, 0, decodedStringTop.length);
-                imgViewPlayera.setImageBitmap(decodedByteTop);
-
-                byte[] decodedStringBottom = Base64.decode(imgBase64BottomObtenido, Base64.DEFAULT);
-                Bitmap decodedByteBottom = BitmapFactory.decodeByteArray(decodedStringBottom, 0, decodedStringBottom.length);
-                imgViewShort.setImageBitmap(decodedByteBottom);
-
-                byte[] decodedStringShoes = Base64.decode(imgBase64ShoesObtenido, Base64.DEFAULT);
-                Bitmap decodedByteShoes = BitmapFactory.decodeByteArray(decodedStringShoes, 0, decodedStringShoes.length);
-                imgViewTenis.setImageBitmap(decodedByteShoes);
-
-                byte[] decodedStringMisc = Base64.decode(imgBase64MiscObtenido, Base64.DEFAULT);
-                Bitmap decodedByteMisc = BitmapFactory.decodeByteArray(decodedStringMisc, 0, decodedStringMisc.length);
-                imgViewCollar.setImageBitmap(decodedByteMisc);
 
             }
         }, new Response.ErrorListener() {
@@ -501,27 +492,130 @@ public class MainActivity extends AppCompatActivity {
 
         requestQueue.add(jsonObjectRequest);
 
+        String urlApi2 = "http://192.168.1.66:3000/climaLower";
+
+        JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest(Request.Method.GET, urlApi2, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                //System.out.println("Respuesta lower: " + response.toString());
+
+
+                try {
+                    imgBase64BottomObtenido = (String) response.get("imgBottom");
+                    imgBottomBase64 = imgBase64BottomObtenido;
+
+                    sugerenciaBottomObtenido = (String) response.get("tipoBottom");
+                    imgBottomTipo = sugerenciaBottomObtenido;
+
+                    imgBottomName = "defaultBottomName";
+
+                    byte[] decodedStringBottom = Base64.decode(imgBase64BottomObtenido, Base64.DEFAULT);
+                    Bitmap decodedByteBottom = BitmapFactory.decodeByteArray(decodedStringBottom, 0, decodedStringBottom.length);
+                    imgViewShort.setImageBitmap(decodedByteBottom);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest1);
+
+        String urlApi3 = "http://192.168.1.66:3000/climaShoes";
+
+        JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest(Request.Method.GET, urlApi3, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                //System.out.println("Respuesta shoes: " + response.toString());
+
+                try {
+                    imgBase64ShoesObtenido = (String) response.get("imgShoes");
+                    imgShoesBase64 = imgBase64ShoesObtenido;
+
+                    sugerenciaShoesObtenido = (String) response.get("tipoShoes");
+                    imgShoesTipo = sugerenciaShoesObtenido;
+
+                    imgShoesName = "defaultShoesName";
+
+                    byte[] decodedStringShoes = Base64.decode(imgBase64ShoesObtenido, Base64.DEFAULT);
+                    Bitmap decodedByteShoes = BitmapFactory.decodeByteArray(decodedStringShoes, 0, decodedStringShoes.length);
+                    imgViewTenis.setImageBitmap(decodedByteShoes);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest2);
+
+        String urlApi4 = "http://192.168.1.66:3000/climaMisc";
+
+        JsonObjectRequest jsonObjectRequest3 = new JsonObjectRequest(Request.Method.GET, urlApi4, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                //System.out.println("Respuesta misc: " + response.toString());
+
+                try {
+                    imgBase64MiscObtenido = (String) response.get("imgMisc");
+                    imgMiscBase64 = imgBase64MiscObtenido;
+
+                    sugerenciaMiscObtenido = (String) response.get("tipoMisc");
+                    imgMiscTipo = sugerenciaMiscObtenido;
+
+                    imgMiscName = "defaultMiscName";
+
+                    byte[] decodedStringMisc = Base64.decode(imgBase64MiscObtenido, Base64.DEFAULT);
+                    Bitmap decodedByteMisc = BitmapFactory.decodeByteArray(decodedStringMisc, 0, decodedStringMisc.length);
+                    imgViewCollar.setImageBitmap(decodedByteMisc);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest3);
+
     }
 
-    public void openFragmentComentarios(View v){
+    public void openFragmentComentarios(View v) {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentComentarios()).commit();
     }
 
-    public void favorito(View v){
-        if(fav == 1){
+    public void favorito(View v) {
+        if (fav == 1) {
             v.setBackgroundResource(R.drawable.star);
-            fav=0;
+            fav = 0;
         } else {
             v.setBackgroundResource(R.drawable.star_border);
-            fav=1;
+            fav = 1;
         }
     }
 
-    public void btn1(View v){
+    public void btn1(View v) {
         Toast.makeText(getApplicationContext(), "Presionaste boton 1", Toast.LENGTH_SHORT).show();
     }
 
-    public void btn2(View v){
+    public void btn2(View v) {
         Toast.makeText(getApplicationContext(), "Presionaste boton 2", Toast.LENGTH_SHORT).show();
     }
 
