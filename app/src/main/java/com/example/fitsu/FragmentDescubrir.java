@@ -67,8 +67,6 @@ public class FragmentDescubrir extends Fragment implements Response.ErrorListene
 
         recyclerPublicaciones.setAdapter(adp);
 
-        //Si funciona el metodo del otro fragmento entonces seria poner el mismo aqui
-
         return  view;
     }
 
@@ -77,8 +75,8 @@ public class FragmentDescubrir extends Fragment implements Response.ErrorListene
         dialog.setMessage("Consultando historial");
         dialog.show();
 
-        //String url = "http://192.168.1.66:3000/historial";
-        String url = "http://192.168.8.105:3000/historial";
+        String url = "http://192.168.1.66:3000/descubrirObtener";
+        //String url = "http://192.168.8.105:3000/historial";
 
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         request.add(jsonObjectRequest);
@@ -93,39 +91,54 @@ public class FragmentDescubrir extends Fragment implements Response.ErrorListene
     public void onResponse(JSONObject response) {
         Publicacion publicacion = null;
 
-        JSONArray jsonConjuntos = null; // aqui va el nombre de la tabla
-        int jsonNumeroDocs = 0;
+        JSONArray jsonDescubrir = null; // aqui va el nombre de la tabla
 
         try {
-            jsonConjuntos = response.getJSONArray("conjuntos");//seria cambiar las tablas y lo que sea necesario
-            jsonNumeroDocs = response.getInt("numeroDocs");
-            System.out.println("Respuesta historial: " + jsonConjuntos);
-            System.out.println("Respuesta num documentos: " + jsonNumeroDocs);
+            jsonDescubrir = response.getJSONArray("usuarios");//seria cambiar las tablas y lo que sea necesario
+            System.out.println("Respuesta descubrir: " + jsonDescubrir);
+            System.out.println("Tamaño del array: " + jsonDescubrir.length());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        for (int i = 0; i < jsonNumeroDocs; i++) {
+        for (int i = 0; i < jsonDescubrir.length(); i++) {
             publicacion = new Publicacion();
-            JSONObject jsonObjectFecha = null;
-            JSONObject jsonObjectDatoImagen = null;
+            JSONObject jsonObjectObtenido = null;
+            JSONObject jsonObjectImage = null;
+            JSONObject jsonObjectName = null;
+            JSONObject jsonObjectComentario = null;
+            String img64Descubrir = "";
+            String nameDescubrir = "";
+            String comentarioDescubrir = "";
 
             try {
-                jsonObjectFecha = jsonConjuntos.getJSONObject(i);
-                //System.out.println("jsonObject #" + (i+1) + ": " + jsonObjectFecha);
-                jsonObjectDatoImagen = jsonObjectFecha.getJSONObject("imgConjunto");
-                //System.out.println("jsonObjImg: " + jsonObjectDatoImagen);
+                jsonObjectObtenido = jsonDescubrir.getJSONObject(i);
+                //System.out.println("jsonObject #" + (i+1) + ": " + jsonObjectObtenido);
+                jsonObjectImage = jsonObjectObtenido.getJSONObject("img64Usuario");
+                jsonObjectName = jsonObjectObtenido.getJSONObject("nameUsuario");
+                jsonObjectComentario = jsonObjectObtenido.getJSONObject("comentarioUsuario");
+                //System.out.println("Imagen final del usuario # " + (i+1) + ": " + jsonObjectImage.get("img64usuario"));
+                //System.out.println("Nombre final del usuario # " + (i+1) + ": " + jsonObjectName.get("nameusuario"));
+                //System.out.println("Comentario final del usuario # " + (i+1) + ": " + jsonObjectComentario.get("comentariousuario"));
+                img64Descubrir = (String) jsonObjectImage.get("img64usuario");
+                nameDescubrir = (String) jsonObjectName.get("nameusuario");
+                comentarioDescubrir = (String) jsonObjectComentario.get("comentariousuario");
+                System.out.println("img: " + img64Descubrir);
+                System.out.println("name: " + nameDescubrir);
+                System.out.println("comment: " + comentarioDescubrir);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             //Aqui va igual que en el FragmentHistorial pero con sus respectivas tablas y su informacion
-            //publicacion.setNameP();
-            //publicacion.setContentP();
-            //publicacion.setOutfitStr();
+            publicacion.setNameP(nameDescubrir);
+            publicacion.setContentP(comentarioDescubrir);
+            publicacion.setOutfitStr(img64Descubrir);
 
             listaPublicaciones.add(publicacion);
         }
+
+
         dialog.hide();
         AdaptadorDescubrir adp = new AdaptadorDescubrir(context, listaPublicaciones);
         recyclerPublicaciones.setAdapter(adp);

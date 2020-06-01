@@ -348,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
-        String urlAPI = "http://192.168.0.6:3000/conjunto";
+        String urlAPI = "http://192.168.1.66:3000/conjunto";
 
         JSONObject jsonBody = new JSONObject();
         JSONObject jsonImgTop = new JSONObject();
@@ -404,7 +404,7 @@ public class MainActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    System.out.println("Error: " + error.getMessage());
+                    System.out.println("Error: " + error.networkResponse);
                 }
 
             }) {

@@ -12,7 +12,9 @@
         android:layout_marginTop="16dp"
         android:adjustViewBounds="true"
         android:cropToPadding="true"
+        android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/image1" />
 
